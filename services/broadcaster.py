@@ -1,17 +1,35 @@
+import asyncio
+
+
 async def broadcast(
-    app,
+    bot,
     users,
     message
 ):
 
-    for user in users:
+    success = 0
+    failed = 0
+
+    for user_id in users:
 
         try:
 
-            await app.bot.send_message(
-                chat_id=user,
+            await bot.send_message(
+                chat_id=user_id,
                 text=message
             )
 
+            success += 1
+
+            await asyncio.sleep(
+                0.05
+            )
+
         except Exception:
-            pass
+
+            failed += 1
+
+    return {
+        "success": success,
+        "failed": failed
+    }
