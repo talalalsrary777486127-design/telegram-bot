@@ -1,18 +1,26 @@
 import shutil
-import datetime
+import os
+from datetime import datetime
 
 
 def create_backup():
 
-    now = datetime.datetime.now()
+    os.makedirs(
+        "backups",
+        exist_ok=True
+    )
 
-    backup_name = (
-        f"backups/links_{now}.db"
+    timestamp = datetime.now().strftime(
+        "%Y%m%d_%H%M%S"
+    )
+
+    backup_file = (
+        f"backups/links_{timestamp}.db"
     )
 
     shutil.copy(
         "links.db",
-        backup_name
+        backup_file
     )
 
-    return backup_name
+    return backup_file
